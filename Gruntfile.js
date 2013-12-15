@@ -20,6 +20,14 @@ module.exports = function (grunt) {
             dist: 'dist'
         },
         watch: {
+            coffee: {
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
+                tasks: ['coffee:dist']
+            },
+            coffeeTest: {
+                files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
+                tasks: ['coffee:test']
+            },
             compass: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass:server', 'autoprefixer']
@@ -104,6 +112,26 @@ module.exports = function (grunt) {
                     run: true,
                     urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
                 }
+            }
+        },
+        coffee: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>/scripts',
+                    src: '{,*/}*.{coffee,litcoffee,coffee.md}',
+                    dest: '.tmp/scripts',
+                    ext: '.js'
+                }]
+            },
+            test: {
+                files: [{
+                    expand: true,
+                    cwd: 'test/spec',
+                    src: '{,*/}*.{coffee,litcoffee,coffee.md}',
+                    dest: '.tmp/spec',
+                    ext: '.js'
+                }]
             }
         },
         compass: {
@@ -271,12 +299,15 @@ module.exports = function (grunt) {
         concurrent: {
             server: [
                 'compass',
+                'coffee:dist',
                 'copy:styles'
             ],
             test: [
+                'coffee',
                 'copy:styles'
             ],
             dist: [
+                'coffee',
                 'compass',
                 'copy:styles',
                 'imagemin',
