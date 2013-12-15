@@ -17,8 +17,21 @@ module.exports = function (grunt) {
         // configurable paths
         yeoman: {
             app: 'app',
-            dist: 'dist'
+            dist: 'dist',
+            phonegap: 'www'
         },
+
+        shell: {
+          phonegapBuild: {
+              command: function(target){
+                  return 'phonegap build ' + target;
+              },
+              options: {
+                  stdout: true
+              }
+          }
+        },
+
         watch: {
             coffee: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
@@ -92,6 +105,7 @@ module.exports = function (grunt) {
                     ]
                 }]
             },
+            phonegap: ['<%= yeoman.phonegap %>/*', '!<%= yeoman.phonegap %>/config.xml', '!<%= yeoman.phonegap %>/res'],
             server: '.tmp'
         },
         jshint: {
@@ -294,6 +308,12 @@ module.exports = function (grunt) {
                 cwd: '<%= yeoman.app %>/styles',
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
+            },
+            phonegap: {
+                expand: true,
+                cwd: '<%= yeoman.dist %>',
+                dest: '<%= yeoman.phonegap %>',
+                src: '**'
             }
         },
         concurrent: {
@@ -356,6 +376,17 @@ module.exports = function (grunt) {
         'rev',
         'usemin'
     ]);
+
+    grunt.loadNpmTasks('grunt-shell');
+    grunt.registerTask('phonegap', function () {
+        var platform = grunt.option('target') || 'android';
+        grunt.task.run([
+            'clean:phonegap',
+            'build',
+            'copy:phonegap',
+            'shell:phonegapBuild:' + platform
+        ]);
+    });
 
     grunt.registerTask('default', [
         'jshint',
