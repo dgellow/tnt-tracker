@@ -1,37 +1,49 @@
 <!doctype html>
-    <head>
-        <meta charset="utf-8">
-        <title>hello</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
-        <!-- endbuild -->
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <title>hello</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+<body class="row">
+<main class="columns small-centered">
+    <input type="number" placeholder="Enter your consignment number" id="consignment-number" class="columns"/>
 
-        <input type="number" id="consignment-number" />
+    <h2>Pickup date</h2>
+    <p id="pickup-date" data-bind="text: pickup_date">pickup date empty</p>
 
-        <h1>Package</h1>
-        <h2>Pickup date</h2>
-        <p id="pickup-date">pickup date empty</p>
-        <h2>Destination</h2>
-        <p id="destination">destination empty</p>
-        <h2>Delivery date</h2>
-        <p id="delivery-date">delivery date empty</p>
+    <h2>Destination</h2>
 
-        <button onclick="window.tnttracker.fetch()">Refresh</button>
+    <p id="destination" data-bind="text: destination">destination empty</p>
 
-        <!-- build:js scripts/vendor.js -->
-        <!-- bower:js -->
-        <script src="bower_components/jquery/jquery.js"></script>
-        <script src="bower_components/foundation/js/foundation.js"></script>
-        <!-- endbower -->
-        <!-- endbuild -->
+    <h2>Delivery date</h2>
 
-        <!-- build:js(.tmp) scripts/coffee.js -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
-    </body>
+    <p id="delivery-date" data-bind="text: delivery_date">delivery date empty</p>
+
+    <button data-bind="click: fetch">Refresh</button>
+
+    <!-- ko with: error -->
+    <div data-alert class="alert-box warning radius" data-bind="text: message">
+        <a href="#" class="close">&times;</a>
+    </div>
+    <!-- /ko -->
+</main>
+
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/modernizr/modernizr.js"></script>
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/foundation/js/foundation.js"></script>
+<script src="bower_components/knockoutjs/build/output/knockout-latest.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js(.tmp) scripts/coffee.js -->
+<script src="scripts/main.js"></script>
+<!-- endbuild -->
+</body>
 </html>
