@@ -7,6 +7,10 @@ class AppViewModel
     @destination = ko.observable 'Destination empty'
     @delivery_date = ko.observable 'Delivery date empty'
 
+    @history =
+      header: ko.observableArray []
+      body: ko.observableArray []
+
     @error = ko.observable null
 
   readInput: ->
@@ -22,14 +26,32 @@ class AppViewModel
         dataType: 'html'
       .done (data) =>
           context = $.parseHTML data
-          console.debug context
           parsed = $("table tbody", context)
-          console.debug parsed
           [package_table, history_table] = [parsed[1].children, parsed[2].children]
 
+          # Package informations
           @pickup_date @_children_textContent package_table[0]
           @destination @_children_textContent package_table[1]
           @delivery_date @_sanitize @_children_textContent package_table[2]
+
+
+          # History
+          history_array = Array.prototype.slice.call(history_table)
+          history_header = history_array[0]
+          history_body = history_array[1..]
+
+          @history.header.removeAll()
+          @history.body.removeAll()
+
+          # Table header
+          $.each history_header.children, (index, item) =>
+            @history.header.push item.textContent
+
+
+          # Table body
+          $.each history_body, (index, value) =>
+            @history.body.push $.map value.children, (data) ->
+              data.textContent
 
           @error null
 

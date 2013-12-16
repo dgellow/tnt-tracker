@@ -10,27 +10,54 @@
     <!-- endbuild -->
 </head>
 <body class="row">
-<main class="columns small-centered">
-    <input type="number" placeholder="Enter your consignment number" id="consignment-number" class="columns"/>
+<header class="row"></header>
+<main class="columns small-12 medium-10 small-centered">
+    <header class="row">
+        <h1 class="columns small-12">TNT Consignment Tracker</h1>
+    </header>
 
-    <h2>Pickup date</h2>
-    <p id="pickup-date" data-bind="text: pickup_date">pickup date empty</p>
-
-    <h2>Destination</h2>
-
-    <p id="destination" data-bind="text: destination">destination empty</p>
-
-    <h2>Delivery date</h2>
-
-    <p id="delivery-date" data-bind="text: delivery_date">delivery date empty</p>
-
-    <button data-bind="click: fetch">Refresh</button>
+    <div class="row">
+        <div class="small-6 columns">
+            <input type="number" placeholder="Enter your consignment number" id="consignment-number" />
+        </div>
+        <div class="small-6 columns">
+            <button data-bind="click: fetch" class="postfix">Refresh</button>
+        </div>
+    </div>
 
     <!-- ko with: error -->
     <div data-alert class="alert-box warning radius" data-bind="text: message">
         <a href="#" class="close">&times;</a>
     </div>
     <!-- /ko -->
+
+    <dl>
+        <dt>Pickup date</dt>
+        <dd id="pickup-date" data-bind="text: pickup_date">pickup date empty</dd>
+
+        <dt>Destination</dt>
+        <dd id="destination" data-bind="text: destination">destination empty</dd>
+
+        <dt>Delivery date</dt>
+        <dd id="delivery-date" data-bind="text: delivery_date">delivery date empty</dd>
+    </dl>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Status</th>
+        </tr>
+        <!-- ko foreach: history.body -->
+        <tr>
+            <!-- ko foreach: $data -->
+            <td data-bind="text: $data"></td>
+            <!-- /ko -->
+        </tr>
+        <!-- /ko -->
+    </table>
+
 </main>
 
 <!-- build:js scripts/vendor.js -->
