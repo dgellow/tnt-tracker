@@ -1,7 +1,6 @@
 <!doctype html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>hello</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
@@ -12,14 +11,17 @@
     </head>
     <body>
 
-        <div class="hero-unit">
-          <h1>'Allo, 'Allo!</h1>
-          <p>You now have</p>
-          <ul>
-            <li>HTML5 Boilerplate</li>
+        <input type="number" id="consignment-number" />
 
-          </ul>
-        </div>
+        <h1>Package</h1>
+        <h2>Pickup date</h2>
+        <p id="pickup-date">pickup date empty</p>
+        <h2>Destination</h2>
+        <p id="destination">destination empty</p>
+        <h2>Delivery date</h2>
+        <p id="delivery-date">delivery date empty</p>
+
+        <button onclick="window.tnttracker.fetch()">Refresh</button>
 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
